@@ -53,18 +53,28 @@ function onReady() {
 	function onSearchResults(data) {
 
 		console.log(data);
-		console.log(data.Search[0].imdbID);
+		// i = 0;
+		// for (var i = 0; i < 10; i++) {
 
-		i = 0;
-		for (var i = 0; i < 10; i++) {
+		// 	$('#table-data').append("<tr class=\"movie\"><td>" + data.Search[i].Title + "</td>" + "<td>" + data.Search[i].Year + "</td></tr>");
+		// }
 
-			$('#table-data').append("<tr class=\"movie\"><td>" + data.Search[i].Title + "</td>" + "<td>" + data.Search[i].Year + "</td></tr>");
-		}
-		$('tr').on('click', onTdClick);
+		for(var key in data.Search){
+			var rowTemplate = _.template('<tr><td><%= Title %></td></tr>');
+			// data.Search[key].ref = key;
+			$('#table-data').append(rowTemplate(data.Search[key]));
+			// $('#movies').append(rowTemplate({Title: 'Benji', Year: 1984, Genre: 'Childrens'}));
 
-		function onTdClick() {
-			// $(this).appendTo($('#watch-list'));
-			console.log('you clicked me');
+				$('tr').on('click', onTdClick);
+
+			function onTdClick() {
+				$(this).appendTo($('#watch-list'));
+				console.log('you clicked me');
+
+				console.log($(this));
+				// localStorage.setItem(2, $(this.);
+				// localStorage.setItem(JSON.stringify($(this)));
+			}
 		}
 	}
 // "<th>" + data.Search[counter].Title + "</th>"
@@ -104,6 +114,7 @@ function onReady() {
 	// 	// $(this).appendTo($('#watch-list'));
 	// 	console.log('you clicked me');
 	// }
+
 
 }
 
