@@ -59,23 +59,27 @@ function onReady() {
 		// 	$('#table-data').append("<tr class=\"movie\"><td>" + data.Search[i].Title + "</td>" + "<td>" + data.Search[i].Year + "</td></tr>");
 		// }
 
-		for(var key in data.Search){
-			var rowTemplate = _.template('<tr><td><%= Title %></td></tr>');
-			// data.Search[key].ref = key;
-			$('#table-data').append(rowTemplate(data.Search[key]));
-			// $('#movies').append(rowTemplate({Title: 'Benji', Year: 1984, Genre: 'Childrens'}));
-
-				$('tr').on('click', onTdClick);
-
+			for(var key in data.Search){
+				var rowTemplate = _.template('<tr><td><%= Title %></td></tr>');
+				// data.Search[key].ref = key;
+				$('#table-data').append(rowTemplate(data.Search[key]));
+				// $('#movies').append(rowTemplate({Title: 'Benji', Year: 1984, Genre: 'Childrens'}));
+				// console.log(JSON.stringify(data.Search[key]));
+			}
+			$('tr').on('click', onTdClick);
 			function onTdClick() {
 				$(this).appendTo($('#watch-list'));
-				console.log('you clicked me');
 
-				console.log($(this));
-				// localStorage.setItem(2, $(this.);
-				// localStorage.setItem(JSON.stringify($(this)));
+			localStorage.setItem("watchList", JSON.stringify(data.Search[key]));
+			// localStorage.setItem(JSON.stringify($(this.innerText)));
+			// localStorage.setItem($(this), dojox.json.ref.toJson($(this)));
+			$(this).on('click', onTdClickWatched);
+			function onTdClickWatched() {
+				$(this).appendTo($('#watched-list'));
+				localStorage.setItem("watchedList", JSON.stringify(data.Search[key]));
 			}
 		}
+
 	}
 // "<th>" + data.Search[counter].Title + "</th>"
 	// function onTomatoResults(data) {
@@ -115,6 +119,21 @@ function onReady() {
 	// 	console.log('you clicked me');
 	// }
 
+	// $("#watch-list").val(localStorage.getItem("searchResponse"));
+	// $("watch-list").append(localStorage.searchResponse);
+	// return localStorage.getItem("searchResponse");
+	// function load_data() {
+	//   var input = document.getElementById("watch-list");
+	//   input.value = localStorage.getItem("searchResponse");
+	//   console.log('loading data');
+	// }
 
+	// load_data();
+
+	var watchList = JSON.parse(localStorage.getItem("watchList"));
+	$('<span>'+watchList+'</span>').appendTo('#watch-list');
+
+	var watchedList = JSON.parse(localStorage.getItem("watchedList"));
+	$('<span>'+watchedList+'</span>').appendTo('#watched-list');
 }
 
